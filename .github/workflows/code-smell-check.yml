@@ -13,4 +13,4 @@ jobs:
     - name: Install dependencies
       run: npm install eslint
     - name: Run code smell check
-      run: npm ru  lint
+      run: npm run lint
