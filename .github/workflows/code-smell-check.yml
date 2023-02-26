@@ -1,0 +1,16 @@
+name: Code Smell Check
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  check-smells:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Install dependencies
+      run: npm install eslint
+    - name: Run code smell check
+      run: npm run lint
