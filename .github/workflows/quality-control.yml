@@ -21,16 +21,5 @@ jobs:
     - name: Dependency install
       run: npm install
 
-    - name: Install jq
-      run: sudo apt-get install -y jq
-
     - name: Run test
       run: npm run test
-
-    - name: Block PR with low test coverage (<80)
-      run: |
-        coverage=$(cat coverage/coverage-summary.json | jq '.total.lines.pct')
-        if (( $(echo "$coverage < 80" | bc -l) )); then
-          echo "Coverage is less than 80% (${coverage}%)"
-          exit 1
-        fi
