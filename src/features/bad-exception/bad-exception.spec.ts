@@ -19,7 +19,7 @@ describe('BadExceptionController', () => {
 
 	describe('BadException', () => {
 		it('should return "Found 1 errors!"', () => {
-			expect(badExceptionController.getBadException()).toBe('Found 1 errors');
+			expect(badExceptionController.getBadException()).toBe('Found 2 errors');
 		});
 	});
 });
