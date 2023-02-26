@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { Logger } from '../../common';
 import { BadExceptionController } from './bad-exception.controller';
 import { BadExceptionService } from './bad-exception.service';
 
@@ -8,7 +9,7 @@ describe('BadExceptionController', () => {
 	beforeEach(async () => {
 		const app: TestingModule = await Test.createTestingModule({
 			controllers: [BadExceptionController],
-			providers: [BadExceptionService],
+			providers: [BadExceptionService, Logger],
 		}).compile();
 
 		badExceptionController = app.get<BadExceptionController>(
@@ -16,9 +17,9 @@ describe('BadExceptionController', () => {
 		);
 	});
 
-	describe('root', () => {
-		it('should return "Hello World!"', () => {
-			expect(badExceptionController.getHello()).toBe('Hello World!');
+	describe('BadException', () => {
+		it('should return "Found 1 errors!"', () => {
+			expect(badExceptionController.getBadException()).toBe('Found 2 errors');
 		});
 	});
 });

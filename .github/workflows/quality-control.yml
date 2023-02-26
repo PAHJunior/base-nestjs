@@ -1,0 +1,25 @@
+name: Quality Control
+
+on:
+  pull_request:
+    branches: [main]
+    required: true
+
+jobs:
+  testes:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Branch checkout
+      uses: actions/checkout@v2
+
+    - name: Setup
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14.x'
+
+    - name: Dependency install
+      run: npm install
+
+    - name: Run test
+      run: npm run test

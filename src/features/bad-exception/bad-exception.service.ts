@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Logger } from 'src/common';
+import { Logger } from '../../common';
 import { BadException, ErrorLevelEnum } from './bad-exception.filter';
 
 @Injectable()
@@ -23,6 +23,6 @@ export class BadExceptionService {
 			this.logger.log('Bad exception level', null, error);
 		}
 
-		return `Total erros ${badExceptions.length}`;
+		return `Found ${badExceptions.length} errors`;
 	}
 }
