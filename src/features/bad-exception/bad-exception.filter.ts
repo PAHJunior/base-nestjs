@@ -1,29 +1,30 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 
-export enum ErrorLevel {
+export enum ErrorLevelEnum {
 	LOW = 'low',
 	MEDIUM = 'medium',
 	HIGH = 'high',
 }
 
 export interface BadExceptionInterface {
-	statusCode: number;
 	message: string;
-	errorLevel?: ErrorLevel;
+	errorLevel: ErrorLevelEnum;
+	statusCode?: number;
 }
 
 export class BadException extends HttpException {
-	public level: ErrorLevel;
+	private customMessage: BadExceptionInterface;
 
-	constructor(message: string, errorLevel: ErrorLevel) {
-		const defaultResponse: BadExceptionInterface = {
-			statusCode: HttpStatus.BAD_REQUEST,
-			message,
-		};
+	constructor(badException: BadExceptionInterface) {
 		const error: BadExceptionInterface = {
-			...defaultResponse,
-			errorLevel,
+			statusCode: HttpStatus.BAD_REQUEST,
+			...badException,
 		};
 		super(error, HttpStatus.BAD_REQUEST);
+		this.customMessage = error;
+	}
+
+	public getResponse(): BadExceptionInterface {
+		return this.customMessage;
 	}
 }
