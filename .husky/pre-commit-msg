@@ -25,5 +25,5 @@ BRANCH_IN_COMMIT=$(grep -c "\[$BRANCH_NAME\]" "$1")
 if [[ -n "$BRANCH_NAME" && $BRANCH_EXCLUDED -ne 1 && $BRANCH_IN_COMMIT -lt 1 ]]; then
   echo paulo $BRANCH_NAME
   msg=$(cat "$1")
-  echo "[$BRANCH_NAME] - $msg" > "$1"
+  echo "[$BRANCH_NAME] PAULO - $msg" > "$1"
 fi
