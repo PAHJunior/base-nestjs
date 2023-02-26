@@ -3,6 +3,7 @@ name: Quality Control
 on:
   pull_request:
     branches: [main]
+    required: true
 
 jobs:
   testes:
