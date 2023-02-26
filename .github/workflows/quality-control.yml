@@ -39,5 +39,7 @@ jobs:
 
     - name: Jest Annotations Coverage
       uses: mattallty/jest-github-action@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        token: ${{ secrets.GH_TOKEN }}
+        coverage-comment: false
