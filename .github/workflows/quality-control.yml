@@ -26,9 +26,6 @@ jobs:
     - name: Run test
       run: npm run test
 
-    - name: Test coverage
-      run: npm run test:cov
-
     - name: Block PR with low test coverage (<80)
       run: |
         coverage=$(cat coverage/coverage-summary.json | jq '.total.lines.pct')
@@ -38,8 +35,7 @@ jobs:
         fi
 
     - name: Jest Annotations Coverage
-      uses: mattallty/jest-github-action@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        coverage-comment: false
+      uses: ziishaned/jest-reporter-action@v0.0.1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          test-command: "npm run test:cov"
