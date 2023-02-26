@@ -1,0 +1,43 @@
+name: Quality Control
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  testes:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Branch checkout
+      uses: actions/checkout@v2
+
+    - name: Setup
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14.x'
+
+    - name: Dependency install
+      run: npm install
+
+    - name: Install jq
+      run: sudo apt-get install -y jq
+
+    - name: Run test
+      run: npm run test
+
+    - name: Test coverage
+      run: npm run test:cov
+
+    - name: Block PR with low test coverage (<80)
+      run: |
+        coverage=$(cat coverage/coverage-summary.json | jq '.total.lines.pct')
+        if (( $(echo "$coverage < 80" | bc -l) )); then
+          echo "Coverage is less than 80% (${coverage}%)"
+          exit 1
+        fi
+
+    - name: Jest Annotations Coverage
+      uses: mattallty/jest-github-action@v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
