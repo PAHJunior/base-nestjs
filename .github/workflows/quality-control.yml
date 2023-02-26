@@ -33,9 +33,3 @@ jobs:
           echo "Coverage is less than 80% (${coverage}%)"
           exit 1
         fi
-
-    - name: Jest Annotations Coverage
-      uses: ziishaned/jest-reporter-action@v0.0.1
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        test-command: "npm run test:cov"
