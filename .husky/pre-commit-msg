@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Check if Git is installed
+if ! [ -x "$(command -v git)" ]; then
+  echo 'Error: Git is not installed.' >&2
+  exit 1
+fi
+
+# Set default branches to skip
+if [ -z "$BRANCHES_TO_SKIP" ]; then
+  BRANCHES_TO_SKIP=(develop main)
+fi
+
+# Get current branch name
+BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+
+# Check if the current branch is excluded from prepending commit message
+BRANCH_EXCLUDED=$(printf "%s\n" "${BRANCHES_TO_SKIP[@]}" | grep -c "^$BRANCH_NAME$")
+
+# Check if the current branch name is already in the commit message
+BRANCH_IN_COMMIT=$(grep -c "\[$BRANCH_NAME\]" "$1")
+
+# Prepend branch name to the commit message if not excluded and not already present
+if [[ -n "$BRANCH_NAME" && $BRANCH_EXCLUDED -ne 1 && $BRANCH_IN_COMMIT -lt 1 ]]; then
+  msg=$(cat "$1")
+  echo "[$BRANCH_NAME] - $msg" > "$1"
+fi
