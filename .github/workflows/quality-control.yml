@@ -40,4 +40,4 @@ jobs:
     - name: Jest Annotations Coverage
       uses: mattallty/jest-github-action@v1
       with:
-        token: ${{ secrets.GH_TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
