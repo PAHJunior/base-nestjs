@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Logger } from 'src/common';
-import { BadException, ErrorLevel } from './bad-exception.filter';
+import { BadException, ErrorLevelEnum } from './bad-exception.filter';
 
 @Injectable()
 export class BadExceptionService {
@@ -8,13 +8,21 @@ export class BadExceptionService {
 
 	getBadException(): string {
 		const badExceptions = [
-			new BadException('Erro de nível baixo.', ErrorLevel.HIGH),
+			new BadException({
+				message: 'Error low level.',
+				errorLevel: ErrorLevelEnum.LOW,
+			}),
+			new BadException({
+				message: 'Error high level',
+				errorLevel: ErrorLevelEnum.HIGH,
+			}),
 		];
 
 		for (const badException of badExceptions) {
-			this.logger.log('Bad exception level', null, badException);
+			const error = badException.getResponse();
+			this.logger.log('Bad exception level', null, error);
 		}
 
-		return `Foram entrandados ${badExceptions.length} errors`;
+		return `Total erros ${badExceptions.length}`;
 	}
 }
