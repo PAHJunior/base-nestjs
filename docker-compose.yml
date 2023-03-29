@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  redis-container:
+    image: redis:7.0.9
+    restart: always
+    ports:
+      - "6379:6379"
+
+  mongodb:
+    image: mongo:4.4
+    restart: always
+    environment:
+      MONGO_INIDB_ROOT_USERNAME: admin
+      MONGO_INIDB_ROOT_PASSWORD: admin
+    volumes:
+      - mongodb_data:/data/db
+
+  base-nestjs:
+    build: .
+    ports:
+      - "9001:9001"
+    depends_on:
+      - redis-container
+      - mongodb
+
+volumes:
+  mongodb_data:
